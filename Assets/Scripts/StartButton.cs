@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+// Start/stop game control
 public class StartButton : MonoBehaviour
 {
     public Control control;
@@ -10,6 +11,7 @@ public class StartButton : MonoBehaviour
 
     private bool active = false;
 
+    // Method called when button is pressed
     public void OnClick()
     {
         if (active)

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SoundPlayer : MonoBehaviour
+public class SoundPlayer : SelectableObject
 {
     public GameObject nextTarget;
     public int beatsFromTarget;
@@ -16,21 +16,18 @@ public class SoundPlayer : MonoBehaviour
         audio.clip = sound;
     }
 
-    void Update()
-    {
-        if (Input.GetMouseButtonDown(0))
-        {
-            RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
-
-            if (hit.transform == transform)
-            {
-                PlayAudio();
-            }
-        }
-    }
-
     public void PlayAudio()
     {
         audio.Play();
+    }
+
+    public override void Select()
+    {
+        selected = true;
+    }
+
+    public override void Deselect()
+    {
+        selected = false;
     }
 }

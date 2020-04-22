@@ -470,6 +470,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52e6bab8b5b7fad448d20506404a92b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  selected: 0
   nextTarget: {fileID: 1633788584}
   beatsFromTarget: 2
   sound: {fileID: 8300000, guid: cf27115cc7dd6c1449853c3931cdacb4, type: 3}
@@ -853,6 +854,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d75e4bfe0ab2fcd479160da3626c618a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  selected: 0
   initialTarget: {fileID: 709567976}
   beatsToInitialTarget: 40
   active: 1
@@ -1180,6 +1182,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52e6bab8b5b7fad448d20506404a92b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  selected: 0
   nextTarget: {fileID: 1385775134}
   beatsFromTarget: 4
   sound: {fileID: 8300000, guid: 1334a7e20257de14f8caf0d5a6eda86c, type: 3}
@@ -1343,6 +1346,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52e6bab8b5b7fad448d20506404a92b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  selected: 0
   nextTarget: {fileID: 861891399}
   beatsFromTarget: 2
   sound: {fileID: 8300000, guid: 15bd7f343ea37694a9482539a76f2f93, type: 3}
@@ -1568,6 +1572,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52e6bab8b5b7fad448d20506404a92b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  selected: 0
   nextTarget: {fileID: 709567976}
   beatsFromTarget: 2
   sound: {fileID: 8300000, guid: cf27115cc7dd6c1449853c3931cdacb4, type: 3}
@@ -1779,6 +1784,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52e6bab8b5b7fad448d20506404a92b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  selected: 0
   nextTarget: {fileID: 1533391108}
   beatsFromTarget: 2
   sound: {fileID: 8300000, guid: cf27115cc7dd6c1449853c3931cdacb4, type: 3}
@@ -2153,6 +2159,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52e6bab8b5b7fad448d20506404a92b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  selected: 0
   nextTarget: {fileID: 1322764751}
   beatsFromTarget: 2
   sound: {fileID: 8300000, guid: 15bd7f343ea37694a9482539a76f2f93, type: 3}
@@ -2480,6 +2487,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1968398425}
   - component: {fileID: 1968398426}
+  - component: {fileID: 1968398427}
   m_Layer: 0
   m_Name: Control
   m_TagString: Untagged
@@ -2515,6 +2523,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bpmField: {fileID: 2138198321}
   BPM: 600
+--- !u!114 &1968398427
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1968398424}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9941280319cac9741b33ad885553b9c4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2085161501
 GameObject:
   m_ObjectHideFlags: 0

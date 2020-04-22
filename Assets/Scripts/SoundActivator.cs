@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SoundActivator : MonoBehaviour
+// Orbs to activate sounds
+public class SoundActivator : SelectableObject
 {
     public GameObject initialTarget;
     public int beatsToInitialTarget;
@@ -51,5 +52,15 @@ public class SoundActivator : MonoBehaviour
     private bool OnTarget()
     {
         return (target.transform.position - transform.position).magnitude < 0.001f;
+    }
+
+    public override void Select()
+    {
+        selected = true;
+    }
+
+    public override void Deselect()
+    {
+        selected = false;
     }
 }
