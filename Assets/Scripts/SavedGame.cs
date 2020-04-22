@@ -60,6 +60,9 @@ public class SavedGame
         // Keep track of <id, gameobject> pairs
         Dictionary<int, GameObject> gameObjectDictionary = new Dictionary<int, GameObject>();
 
+        // Set BPM
+        GameObject.Find("Control").GetComponent<Control>().SetBPM(BPM);
+
         // Load prefabs
         GameObject soundActivatorObject = (GameObject) Resources.Load("Prefabs/sound_activator");
         GameObject soundPlayerObject = (GameObject)Resources.Load("Prefabs/sound_player");
@@ -118,6 +121,7 @@ public class SavedGame
 
     }
 
+    // Write the given saved game to a file
     public static void WriteToFile(string path, SavedGame savedGame)
     {
         FileStream stream = new FileStream(path, FileMode.Create);
@@ -128,6 +132,7 @@ public class SavedGame
         stream.Close();
     }
 
+    // Return a saved game build from the given file
     public static SavedGame ReadFromFile(string path)
     {
         System.Xml.Serialization.XmlSerializer x = new System.Xml.Serialization.XmlSerializer(typeof(SavedGame));
@@ -137,6 +142,7 @@ public class SavedGame
         return savedGame;
     }
 
+    // Get all direct children of a game object
     private GameObject[] ChildrenOf(GameObject gameObject)
     {
         GameObject[] children = new GameObject[gameObject.transform.childCount];
@@ -148,6 +154,7 @@ public class SavedGame
     }
 }
 
+// Generic object that can be saved
 [System.Serializable]
 public class SaveObject
 {
@@ -172,6 +179,7 @@ public class SaveObject
     }
 }
 
+// Save sound activator
 [System.Serializable]
 public class SaveSoundActivator : SaveObject
 {
@@ -194,6 +202,7 @@ public class SaveSoundActivator : SaveObject
     }
 }
 
+// Save sound player
 [System.Serializable]
 public class SaveSoundPlayer : SaveObject
 {

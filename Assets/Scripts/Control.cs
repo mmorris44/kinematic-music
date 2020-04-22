@@ -16,7 +16,7 @@ public class Control : MonoBehaviour
 
     void Start()
     {
-        SetBPM();
+        SetBPMFromField();
     }
 
     void Update()
@@ -34,11 +34,18 @@ public class Control : MonoBehaviour
         }
     }
 
-    public void SetBPM()
+    public void SetBPMFromField()
     {
         string text = bpmField.text;
         if (text != "") BPM = int.Parse(text);
         secondsBetweenBeats = 60f / BPM;
+    }
+
+    public void SetBPM(int BPM)
+    {
+        this.BPM = BPM;
+        secondsBetweenBeats = 60f / BPM;
+        bpmField.text = "" + BPM;
     }
 
     public void StartSim()
