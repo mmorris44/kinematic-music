@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 using System.IO;
+using System.Collections;
 
 [System.Serializable]
 public class SavedGame
@@ -14,7 +15,7 @@ public class SavedGame
     {
         // Fetch relevant data from scene
         BPM = GameObject.Find("Control").GetComponent<Control>().BPM;
-        GameObject[] gameObjects = ChildrenOf(GameObject.Find("/Music"));
+        GameObject[] gameObjects = Utils.ChildrenOf(GameObject.Find("/Music"));
 
         List<SaveSoundActivator> saveSoundActivators = new List<SaveSoundActivator>();
         List<SaveSoundPlayer> saveSoundPlayers = new List<SaveSoundPlayer>();
@@ -51,7 +52,7 @@ public class SavedGame
     {
         // Clear existing music
         GameObject musicObject = GameObject.Find("/Music");
-        GameObject[] currentObjects = ChildrenOf(musicObject);
+        GameObject[] currentObjects = Utils.ChildrenOf(musicObject);
         foreach(GameObject gameObject in currentObjects)
         {
             Object.Destroy(gameObject);
@@ -61,7 +62,8 @@ public class SavedGame
         Dictionary<int, GameObject> gameObjectDictionary = new Dictionary<int, GameObject>();
 
         // Set BPM
-        GameObject.Find("Control").GetComponent<Control>().SetBPM(BPM);
+        GameObject controlObject = GameObject.Find("Control");
+        controlObject.GetComponent<Control>().SetBPM(BPM);
 
         // Load prefabs
         GameObject soundActivatorObject = (GameObject) Resources.Load("Prefabs/sound_activator");
@@ -119,6 +121,8 @@ public class SavedGame
             else { Debug.Log("[ERROR] While populating scene. Could not find referenced object with ID " + saveSoundPlayer.nextTarget); }
         }
 
+        // Draw transitions
+        controlObject.GetComponent<Creator>().DrawTransitionsAfterUpdate();
     }
 
     // Write the given saved game to a file
@@ -140,17 +144,6 @@ public class SavedGame
         SavedGame savedGame = (SavedGame) x.Deserialize(reader);
         reader.Close();
         return savedGame;
-    }
-
-    // Get all direct children of a game object
-    private GameObject[] ChildrenOf(GameObject gameObject)
-    {
-        GameObject[] children = new GameObject[gameObject.transform.childCount];
-        for (int i = 0; i < children.Length; ++i)
-        {
-            children[i] = gameObject.transform.GetChild(i).gameObject;
-        }
-        return children;
     }
 }
 

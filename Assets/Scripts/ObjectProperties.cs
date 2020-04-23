@@ -9,3 +9,5 @@ public abstract class SelectableObject : MonoBehaviour
     public abstract void Select();
     public abstract void Deselect();
 }
+
+public interface TargetableObject { }

@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 // Class for overall game control
+// Assume semi-quavers, default 12 beat transitions
 public class Control : MonoBehaviour
 {
     public InputField bpmField;
