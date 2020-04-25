@@ -1,12 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 // Plays a sound
-public class SoundPlayer : SelectableObject, TargetableObject
+public class SoundPlayer : SelectableObject, TransitionTarget
 {
-    public GameObject nextTarget;
-    public int beatsFromTarget;
     public AudioClip sound;
 
     private new AudioSource audio;
@@ -29,15 +25,15 @@ public class SoundPlayer : SelectableObject, TargetableObject
             {
                 // Check for targetable object
                 GameObject hitObject = hit.transform.gameObject;
-                TargetableObject targetableObject = hitObject.GetComponent<TargetableObject>();
+                TransitionTarget targetableObject = hitObject.GetComponent<TransitionTarget>();
                 if (targetableObject != null)
                 {
-                    nextTarget = hitObject;
+                    target = hitObject;
                 }
             } else
             {
                 // Set next target to nothing
-                nextTarget = null;
+                target = null;
             }
         }
     }

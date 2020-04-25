@@ -16,6 +16,12 @@ public class Transition : MonoBehaviour
                 from.GetComponent<Renderer>().bounds.size.x / 2, to.GetComponent<Renderer>().bounds.size.x / 2);
     }
 
+    // Updates the transform based on the current assigned game objects
+    public void UpdateTransform()
+    {
+        SetTransition(from, to);
+    }
+
     // Draw in a transition
     private void DrawTransition(Vector3 a, Vector3 b, float aRadius, float bRadius)
     {

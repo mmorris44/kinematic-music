@@ -27,8 +27,8 @@ public class SavedGame
             if (soundActivator != null)
             {
                 saveSoundActivators.Add(
-                    new SaveSoundActivator(i, soundActivator.transform.position, System.Array.IndexOf(gameObjects, soundActivator.initialTarget),
-                    soundActivator.beatsToInitialTarget, soundActivator.active));
+                    new SaveSoundActivator(i, soundActivator.transform.position, System.Array.IndexOf(gameObjects, soundActivator.target),
+                    soundActivator.beatsFromTarget, soundActivator.active));
             }
 
             // Check for sound players
@@ -36,7 +36,7 @@ public class SavedGame
             if (soundPlayer != null)
             {
                 saveSoundPlayers.Add(
-                    new SaveSoundPlayer(i, soundPlayer.transform.position, System.Array.IndexOf(gameObjects, soundPlayer.nextTarget),
+                    new SaveSoundPlayer(i, soundPlayer.transform.position, System.Array.IndexOf(gameObjects, soundPlayer.target),
                     soundPlayer.beatsFromTarget, soundPlayer.sound.name));
             }
         }
@@ -76,7 +76,7 @@ public class SavedGame
             gameObject.transform.parent = musicObject.transform;
 
             SoundActivator soundActivator = gameObject.GetComponent<SoundActivator>();
-            soundActivator.beatsToInitialTarget = saveSoundActivator.beatsToInitialTarget;
+            soundActivator.beatsFromTarget = saveSoundActivator.beatsToInitialTarget;
             soundActivator.active = saveSoundActivator.active;
         }
 
@@ -102,8 +102,8 @@ public class SavedGame
             GameObject other;
             if (gameObjectDictionary.TryGetValue(saveSoundActivator.initialTarget, out other))
             {
-                gameObject.GetComponent<SoundActivator>().initialTarget = other;
-            } else { Debug.Log("[ERROR] While populating scene. Could not find referenced object with ID " + saveSoundActivator.initialTarget); }
+                gameObject.GetComponent<SoundActivator>().target = other;
+            } else { Debug.LogError("While populating scene. Could not find referenced object with ID " + saveSoundActivator.initialTarget); }
         }
 
         // Link sound players
@@ -115,9 +115,9 @@ public class SavedGame
             GameObject other;
             if (gameObjectDictionary.TryGetValue(saveSoundPlayer.nextTarget, out other))
             {
-                gameObject.GetComponent<SoundPlayer>().nextTarget = other;
+                gameObject.GetComponent<SoundPlayer>().target = other;
             }
-            else { Debug.Log("[ERROR] While populating scene. Could not find referenced object with ID " + saveSoundPlayer.nextTarget); }
+            else { Debug.LogError("While populating scene. Could not find referenced object with ID " + saveSoundPlayer.nextTarget); }
         }
 
         // Draw transitions
@@ -128,7 +128,7 @@ public class SavedGame
     public static void WriteToFile(string path, SavedGame savedGame)
     {
         FileStream stream = new FileStream(path, FileMode.Create);
-        Debug.Log("Saving file to " + path);
+        Debug.Log("Saving game to " + path);
 
         System.Xml.Serialization.XmlSerializer x = new System.Xml.Serialization.XmlSerializer(typeof(SavedGame));
         x.Serialize(stream, savedGame);
@@ -138,6 +138,7 @@ public class SavedGame
     // Return a saved game build from the given file
     public static SavedGame ReadFromFile(string path)
     {
+        Debug.Log("Loading game from " + path);
         System.Xml.Serialization.XmlSerializer x = new System.Xml.Serialization.XmlSerializer(typeof(SavedGame));
         StreamReader reader = new StreamReader(path);
         SavedGame savedGame = (SavedGame) x.Deserialize(reader);

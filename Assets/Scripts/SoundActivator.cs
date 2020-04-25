@@ -3,13 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 // Orbs to activate sounds
-public class SoundActivator : SelectableObject, TargetableObject
+public class SoundActivator : SelectableObject
 {
-    public GameObject initialTarget;
-    public int beatsToInitialTarget;
     public bool active = false;
 
-    GameObject target;
+    GameObject nextTarget;
     Vector3 transformStep;
 
     private SoundPlayer sound;
@@ -17,10 +15,10 @@ public class SoundActivator : SelectableObject, TargetableObject
     // Set initial target and calculate steps. TODO: Need to call after scene setup has changed
     void Start()
     {
-        this.target = initialTarget;
-        Vector3 gap = target.transform.position - transform.position;
-        transformStep = gap / beatsToInitialTarget;
-        sound = target.GetComponent<SoundPlayer>();
+        this.nextTarget = target;
+        Vector3 gap = nextTarget.transform.position - transform.position;
+        transformStep = gap / beatsFromTarget;
+        sound = nextTarget.GetComponent<SoundPlayer>();
     }
 
     void Update ()
@@ -35,16 +33,16 @@ public class SoundActivator : SelectableObject, TargetableObject
             {
                 // Check for targetable object
                 GameObject hitObject = hit.transform.gameObject;
-                TargetableObject targetableObject = hitObject.GetComponent<TargetableObject>();
+                TransitionTarget targetableObject = hitObject.GetComponent<TransitionTarget>();
                 if (targetableObject != null)
                 {
-                    initialTarget = hitObject;
+                    target = hitObject;
                 }
             }
             else
             {
                 // Set next target to nothing
-                initialTarget = null;
+                target = null;
             }
         }
     }
@@ -58,9 +56,9 @@ public class SoundActivator : SelectableObject, TargetableObject
             if (OnTarget())
             {
                 sound.PlayAudio();
-                if (sound.nextTarget != null)
+                if (sound.target != null)
                 {
-                    SetTarget(sound.nextTarget);
+                    SetTarget(sound.target);
                 } else
                 {
                     active = false;
@@ -72,15 +70,16 @@ public class SoundActivator : SelectableObject, TargetableObject
     // Set the target and calculate steps
     private void SetTarget(GameObject target)
     {
-        this.target = target;
+        this.nextTarget = target;
         Vector3 gap = target.transform.position - transform.position;
         transformStep = gap / sound.beatsFromTarget;
         sound = target.GetComponent<SoundPlayer>();
     }
 
+    // Check if on target
     private bool OnTarget()
     {
-        return (target.transform.position - transform.position).magnitude < 0.001f;
+        return (nextTarget.transform.position - transform.position).magnitude < 0.001f;
     }
 
     public override void Select()

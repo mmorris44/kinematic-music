@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 7951546161070284897}
   - component: {fileID: 7951546161070284903}
   m_Layer: 0
-  m_Name: Sound Player
+  m_Name: sound_player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -96,8 +96,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52e6bab8b5b7fad448d20506404a92b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nextTarget: {fileID: 0}
-  beatsFromTarget: 4
+  selected: 0
+  target: {fileID: 0}
+  beatsFromTarget: 12
   sound: {fileID: 8300000, guid: a317c7f8ebffdb14588670d67fde439a, type: 3}
 --- !u!82 &7951546161070284897
 AudioSource:

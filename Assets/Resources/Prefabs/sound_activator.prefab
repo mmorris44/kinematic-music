@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1094219847033242690}
   - component: {fileID: 1094219847033242691}
   m_Layer: 0
-  m_Name: Sound Activator
+  m_Name: sound_activator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -111,6 +111,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d75e4bfe0ab2fcd479160da3626c618a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialTarget: {fileID: 0}
-  beatsToInitialTarget: 4
+  selected: 0
+  target: {fileID: 0}
+  beatsFromTarget: 12
   active: 1

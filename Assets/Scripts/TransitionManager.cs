@@ -14,8 +14,29 @@ public class TransitionManager : MonoBehaviour
         DrawTransitions();
     }
 
+    // Draw in transitions after the update
+    public void DrawTransitionsAfterUpdate()
+    {
+        StartCoroutine(TransitionDrawRoutine());
+    }
+
+    // Updates the transforms of all transitions involving the given game object
+    public void UpdateTransitions(GameObject gameObject)
+    {
+        foreach (Transition transition in transitions)
+        {
+            if (transition.from == gameObject || transition.to == gameObject) transition.UpdateTransform();
+        }
+    }
+
+    // Deletes all transitions involving the current game object
+    public void DeleteGameobject(GameObject gameObject)
+    {
+        // TODO: implement
+    }
+
     // Draw in all transition arrows
-    public void DrawTransitions()
+    private void DrawTransitions()
     {
         // Destroy existing transitions
         foreach (Transition transition in transitions)
@@ -31,18 +52,13 @@ public class TransitionManager : MonoBehaviour
         // Check objects for transitions to add
         foreach (GameObject musicObject in musicObjects)
         {
-            // Check for sound activator
-            SoundActivator soundActivator = musicObject.GetComponent<SoundActivator>();
-            if (soundActivator != null)
-            {
-                transitionPairs.Add(new Tuple<GameObject, GameObject>(musicObject, soundActivator.initialTarget));
-            }
+            // Check for all selectable objects
+            SelectableObject selectableObject = musicObject.GetComponent<SelectableObject>();
 
-            // Check for sound player
-            SoundPlayer soundPlayer = musicObject.GetComponent<SoundPlayer>();
-            if (soundPlayer != null)
+            // Check that target exists
+            if (selectableObject != null && selectableObject.target != null)
             {
-                transitionPairs.Add(new Tuple<GameObject, GameObject>(musicObject, soundPlayer.nextTarget));
+                transitionPairs.Add(new Tuple<GameObject, GameObject>(musicObject, selectableObject.target));
             }
         }
 
@@ -57,10 +73,27 @@ public class TransitionManager : MonoBehaviour
         }
     }
 
-    // Draw in transitions after the update
-    public void DrawTransitionsAfterUpdate()
+    // Updates the location and dimensions of an existing transition
+    private void UpdateTransition(GameObject from, GameObject to)
     {
-        StartCoroutine(TransitionDrawRoutine());
+        Transition transition = null;
+        foreach(Transition el in transitions)
+        {
+            if (el.from == from && el.to == to)
+            {
+                transition = el;
+                break;
+            }
+        }
+
+        // If transition not found in list, there must be an error in the code
+        if (transition == null)
+        {
+            Debug.LogError("Could not find transition between gameobjects " + from.GetHashCode() + " and " + to.GetHashCode());
+            return;
+        }
+
+        transition.SetTransition(from, to);
     }
 
     // Routine to draw transitions at end of frame
