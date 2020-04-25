@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// Manages the transform of a transition arrow
 public class Transition : MonoBehaviour
 {
     public GameObject from, to;

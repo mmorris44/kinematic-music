@@ -36,7 +36,7 @@ public class TransitionManager : MonoBehaviour
 
     // Deletes all transitions involving the current game object
     // e.g. after object deleted
-    public void DeleteTransitionsForGameobject(GameObject gameObject)
+    public void DeleteTransitionsForGameObject(GameObject gameObject)
     {
         foreach (Transition transition in transitions)
         {
@@ -55,10 +55,16 @@ public class TransitionManager : MonoBehaviour
         transitions.RemoveAll(transition => transition.from == gameObject || transition.to == gameObject);
     }
 
-    // Sets transition from given game object (must be selectable)
+    // Sets transition from given game object. Must be selectable
     // e.g. no transition, change transition, create transition
     public void SetTransition(GameObject from, GameObject to)
     {
+        // Delete existing transition arrow from object
+        foreach (Transition transition in transitions)
+        {
+            if (transition.from == from) Destroy(transition.gameObject);
+        }
+
         // Set target and delete existing transition from object
         from.GetComponent<SelectableObject>().target = to;
         transitions.RemoveAll(transition => transition.from == from);
@@ -104,9 +110,18 @@ public class TransitionManager : MonoBehaviour
         }
     }
 
-    // Create new transition
+    // Create new transition. Checks if valid transition target
     private void CreateTransition(GameObject from, GameObject to)
     {
+        // Check if valid transition target
+        TransitionTarget transitionTarget = to.GetComponent<TransitionTarget>();
+        if (transitionTarget == null)
+        {
+            Debug.Log("Object " + to.GetHashCode() + " is not a valid transition target");
+            return;
+        }
+
+        // Create transition
         GameObject transitionObject = Instantiate(arrowPrefab);
         transitionObject.GetComponent<Transition>().SetTransition(from, to);
         transitionObject.transform.parent = arrowRoot.transform;

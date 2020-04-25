@@ -4,6 +4,12 @@
 public class Creator : MonoBehaviour
 {
     private SelectableObject selectedObject;
+    private TransitionManager transitionManager;
+
+    void Start()
+    {
+        transitionManager = GetComponent<TransitionManager>();
+    }
 
     void Update()
     {
@@ -37,6 +43,31 @@ public class Creator : MonoBehaviour
                 // Deselect if nothing hit
                 DeselectCurrent();
             }
+        }
+
+        // Check for target click
+        if (Input.GetMouseButtonDown(1) && selectedObject != null)
+        {
+            RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
+
+            // Check for hit object
+            if (hit.transform != null)
+            {
+                transitionManager.SetTransition(selectedObject.gameObject, hit.transform.gameObject);
+            }
+            else
+            {
+                // Set next target to nothing
+                transitionManager.SetTransition(selectedObject.gameObject, null);
+            }
+        }
+
+        // Check for deletion
+        if (Input.GetKeyDown(KeyCode.Delete) && selectedObject != null)
+        {
+            Destroy(selectedObject.gameObject);
+            transitionManager.DeleteTransitionsForGameObject(selectedObject.gameObject);
+            selectedObject = null;
         }
     }
 
