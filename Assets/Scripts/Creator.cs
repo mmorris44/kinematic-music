@@ -4,19 +4,22 @@
 public class Creator : MonoBehaviour
 {
     private SelectableObject selectedObject;
+    private SelectableObject draggingObject;
     private TransitionManager transitionManager;
+    private MouseControl mouseControl;
 
     void Start()
     {
         transitionManager = GetComponent<TransitionManager>();
+        mouseControl = GetComponent<MouseControl>();
     }
 
     void Update()
     {
         // Check for selection click
-        if (Input.GetMouseButtonDown(0))
+        if (mouseControl.LeftClick())
         {
-            RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
+            RaycastHit2D hit = Physics2D.Raycast(mouseControl.LeftMousePositionWhenDown(), Vector2.zero);
 
             // Check for hit object
             if (hit.transform != null)
@@ -46,9 +49,9 @@ public class Creator : MonoBehaviour
         }
 
         // Check for target click
-        if (Input.GetMouseButtonDown(1) && selectedObject != null)
+        if (mouseControl.RightClick() && selectedObject != null)
         {
-            RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
+            RaycastHit2D hit = Physics2D.Raycast(mouseControl.RightMousePositionWhenDown(), Vector2.zero);
 
             // Check for hit object
             if (hit.transform != null)
@@ -68,6 +71,33 @@ public class Creator : MonoBehaviour
             Destroy(selectedObject.gameObject);
             transitionManager.DeleteTransitionsForGameObject(selectedObject.gameObject);
             selectedObject = null;
+        }
+
+        // Check if holding mouse over object
+        if (mouseControl.LeftHeld() && draggingObject == null)
+        {
+            RaycastHit2D hit = Physics2D.Raycast(mouseControl.LeftMousePositionWhenDown(), Vector2.zero);
+
+            // Check for hitting selectable object
+            if (hit.transform != null && hit.transform.gameObject.GetComponent<SelectableObject>() != null)
+            {
+                draggingObject = hit.transform.gameObject.GetComponent<SelectableObject>();
+            }
+        }
+
+        // Check for no longer dragging object
+        if (!mouseControl.LeftHeld() && draggingObject)
+        {
+            transitionManager.UpdateTransitions(draggingObject.gameObject);
+            draggingObject = null;
+        }
+
+        // Drag object around
+        if (draggingObject != null)
+        {
+            Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            mousePos.z = 0;
+            draggingObject.transform.position = mousePos;
         }
     }
 

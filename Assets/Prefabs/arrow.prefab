@@ -96,3 +96,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   from: {fileID: 0}
   to: {fileID: 0}
+  arrowPrefab: {fileID: 6415768749961242499}

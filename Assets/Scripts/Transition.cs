@@ -20,6 +20,10 @@ public class Transition : MonoBehaviour
     // Updates the transform based on the current assigned game objects
     public void UpdateTransform()
     {
+        // Reset the scale and rotation to default
+        transform.localScale = new Vector3(0.034f, 0.05f, 1);
+        transform.rotation = Quaternion.identity;
+
         SetTransition(from, to);
     }
 
@@ -33,7 +37,8 @@ public class Transition : MonoBehaviour
         adjust *= (bRadius - aRadius) / 2;
         transform.position += adjust;
 
-        transform.localScale *= ((a-b).magnitude - aRadius - bRadius); // Scale up to correct distance
+        transform.localScale = new Vector3(transform.localScale.x * ((a - b).magnitude - aRadius - bRadius), 
+            transform.localScale.y, transform.localScale.z); // Scale up to correct distance
         transform.Rotate(0, 0, Mathf.Rad2Deg * Mathf.Atan((b.y - a.y) / (b.x - a.x))); // Rotate to correct orientation
         if (b.x < a.x) transform.Rotate(0, 0, 180); // Flip if meant to be facing left
     }
