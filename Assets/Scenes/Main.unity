@@ -1953,6 +1953,7 @@ GameObject:
   - component: {fileID: 1968398425}
   - component: {fileID: 1968398426}
   - component: {fileID: 1968398427}
+  - component: {fileID: 1968398428}
   m_Layer: 0
   m_Name: Control
   m_TagString: Untagged
@@ -1998,6 +1999,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9941280319cac9741b33ad885553b9c4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1968398428
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1968398424}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3582b4e8e0f8f3b4eae42745a22d5084, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   arrowPrefab: {fileID: 6415768749961242499, guid: 6b1cb3dec67f0964a905c9b8ce606efb,

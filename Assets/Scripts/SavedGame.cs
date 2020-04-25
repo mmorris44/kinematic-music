@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 using System.IO;
-using System.Collections;
 
 [System.Serializable]
 public class SavedGame
@@ -122,7 +121,7 @@ public class SavedGame
         }
 
         // Draw transitions
-        controlObject.GetComponent<Creator>().DrawTransitionsAfterUpdate();
+        controlObject.GetComponent<TransitionManager>().DrawTransitionsAfterUpdate();
     }
 
     // Write the given saved game to a file
