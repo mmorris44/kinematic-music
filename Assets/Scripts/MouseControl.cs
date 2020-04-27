@@ -37,7 +37,7 @@ public class MouseControl : MonoBehaviour
             {
                 mouseDown[i] = true;
                 mouseHoldStart[i] = Time.time;
-                mousePositionWhenDown[i] = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                mousePositionWhenDown[i] = MousePosition();
             }
         }
 
@@ -65,6 +65,11 @@ public class MouseControl : MonoBehaviour
                 }
             }
         }
+    }
+
+    public Vector3 MousePosition()
+    {
+        return Camera.main.ScreenToWorldPoint(Input.mousePosition);
     }
 
     public bool LeftClick()

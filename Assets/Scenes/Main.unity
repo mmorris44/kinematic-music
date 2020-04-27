@@ -2052,6 +2052,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9941280319cac9741b33ad885553b9c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  multiSelectIconPrefab: {fileID: 8219827115687956480, guid: 9497f1ecd5ec1ff489d318f83765e416,
+    type: 3}
 --- !u!114 &1968398428
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2078,6 +2080,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff03e46251e614343925cdec0d05ab40, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  holdThreshold: 0.2
 --- !u!1001 &1985166758
 PrefabInstance:
   m_ObjectHideFlags: 0
