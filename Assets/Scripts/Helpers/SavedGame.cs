@@ -128,7 +128,6 @@ public class SavedGame
     public static void WriteToFile(string path, SavedGame savedGame)
     {
         FileStream stream = new FileStream(path, FileMode.Create);
-        Debug.Log("Saving game to " + path);
 
         System.Xml.Serialization.XmlSerializer x = new System.Xml.Serialization.XmlSerializer(typeof(SavedGame));
         x.Serialize(stream, savedGame);
@@ -138,7 +137,6 @@ public class SavedGame
     // Return a saved game build from the given file
     public static SavedGame ReadFromFile (string path)
     {
-        Debug.Log("Loading game from " + path);
         SavedGame savedGame = new SavedGame();
 
         try

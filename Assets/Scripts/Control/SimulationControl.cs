@@ -10,6 +10,8 @@ public class SimulationControl : MonoBehaviour
     public InputField bpmField;
     public Text startButtonText;
     public Button resetButton;
+    public Button saveButton;
+    public Button loadButton;
 
     public int BPM = 600;
 
@@ -17,7 +19,7 @@ public class SimulationControl : MonoBehaviour
     private float nextBeat = 0;
     private float secondsBetweenBeats;
     private bool simActive = false;
-    private bool simFresh = true;
+    private bool simInProgress = false;
 
     private SaveControl saveControl;
 
@@ -86,28 +88,35 @@ public class SimulationControl : MonoBehaviour
     {
         PauseSim();
         startButtonText.text = "Start";
-        simFresh = true;
+        simInProgress = false;
+
         resetButton.interactable = false;
+        saveButton.interactable = true;
+        loadButton.interactable = true;
+
         saveControl.LoadGame(saveControl.reservedFilename);
     }
 
     // Check if sim is active
     public bool SimInProgress()
     {
-        return !simFresh;
+        return simInProgress;
     }
 
     // Start simulation
     private void StartSim()
     {
         simActive = true;
-        if (simFresh)
+        if (!simInProgress)
         {
             soundActivators = GameObject.FindObjectsOfType<SoundActivator>();
             saveControl.SaveGame(saveControl.reservedFilename);
+
+            saveButton.interactable = false;
+            loadButton.interactable = false;
         }
 
-        simFresh = false;
+        simInProgress = true;
     }
 
     // Pause simulation

@@ -147,6 +147,12 @@ public class Creator : MonoBehaviour
                 draggingObject.transform.position += (mousePos - lastMousePos);
             }
 
+            // Lag warning: Remove if game too laggy
+            foreach (SelectableObject draggingObject in draggingObjects)
+            {
+                transitionManager.UpdateTransitions(draggingObject.gameObject);
+            }
+
             if (multiSelectIcon != null) multiSelectIcon.transform.position += (mousePos - lastMousePos);
 
             lastMousePos = mousePos;
