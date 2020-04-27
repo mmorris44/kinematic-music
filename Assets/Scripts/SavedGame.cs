@@ -6,14 +6,14 @@ using System.IO;
 public class SavedGame
 {
     public int BPM;
-    public SaveSoundActivator[] soundActivators;
-    public SaveSoundPlayer[] soundPlayers;
+    public SaveSoundActivator[] soundActivators = new SaveSoundActivator[0];
+    public SaveSoundPlayer[] soundPlayers = new SaveSoundPlayer[0];
 
     // Build the saved game object from the scene
     public void BuildFromScene()
     {
         // Fetch relevant data from scene
-        BPM = GameObject.Find("Control").GetComponent<Control>().BPM;
+        BPM = GameObject.Find("Control").GetComponent<SimulationControl>().BPM;
         GameObject[] gameObjects = Utils.ChildrenOf(GameObject.Find("/Music"));
 
         List<SaveSoundActivator> saveSoundActivators = new List<SaveSoundActivator>();
@@ -62,7 +62,7 @@ public class SavedGame
 
         // Set BPM
         GameObject controlObject = GameObject.Find("Control");
-        controlObject.GetComponent<Control>().SetBPM(BPM);
+        controlObject.GetComponent<SimulationControl>().SetBPM(BPM);
 
         // Load prefabs
         GameObject soundActivatorObject = (GameObject) Resources.Load("Prefabs/sound_activator");
@@ -136,13 +136,23 @@ public class SavedGame
     }
 
     // Return a saved game build from the given file
-    public static SavedGame ReadFromFile(string path)
+    public static SavedGame ReadFromFile (string path)
     {
         Debug.Log("Loading game from " + path);
-        System.Xml.Serialization.XmlSerializer x = new System.Xml.Serialization.XmlSerializer(typeof(SavedGame));
-        StreamReader reader = new StreamReader(path);
-        SavedGame savedGame = (SavedGame) x.Deserialize(reader);
-        reader.Close();
+        SavedGame savedGame = new SavedGame();
+
+        try
+        {
+            System.Xml.Serialization.XmlSerializer x = new System.Xml.Serialization.XmlSerializer(typeof(SavedGame));
+            StreamReader reader = new StreamReader(path);
+            savedGame = (SavedGame)x.Deserialize(reader);
+            reader.Close();
+        }
+        catch (FileNotFoundException)
+        {
+            Debug.Log("Could not find file: " + path);
+        }
+        
         return savedGame;
     }
 }
